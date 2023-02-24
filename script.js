@@ -112,15 +112,14 @@ const store = Redux.createStore(matchReducer);
 
 // clear matches
 
-matchContainer.innerHTML = "";
-
 // render function
 
 const render = () => {
   const state = store.getState();
-  matchContainer.innerHTML = "";
-  state.map((item, index) => {
-    matchContainer.innerHTML += `<div class="match" id=${item.id}>
+
+  const allMatch = state
+    .map((item, index) => {
+      return `<div class="match" id=${item.id}>
   <div class="wrapper">
     <button class="lws-delete" onClick="deleteDispatch(${item.id})">
       <img src="./image/delete.svg" alt="" />
@@ -128,7 +127,7 @@ const render = () => {
     <h3 class="lws-matchName">Match ${state[index].serialNo}</h3>
   </div>
   <div class="inc-dec">
-    <form class="incrementForm">
+    <form class="incrementForm"">
       <h4>Increment</h4>
       <input type="number" name="increment" class="lws-increment" />
     </form>
@@ -143,7 +142,9 @@ const render = () => {
     </h2>
   </div>
 </div>`;
-  });
+    })
+    .join("");
+  matchContainer.innerHTML = allMatch;
 };
 
 render();
